@@ -1,1 +1,40 @@
-# Dartington_EWS_tutorial
+Dartington Tutorial - Calculating early warning signals in practice
+
+The aim of this project is for you to get some hands-on experience of calculating early warning signals for some sample time series displaying different features. Each group will give a short presentation (∼5 minutes) on their progress and challenges. Hopefully by the end of the project you will have a better understanding of using lag-1 autocorrelation and variance to detect approaching tipping points.
+
+Challenge: Using the first six sample time series provided, can you match each time series to each of the following scenarios:
+
+Stationary time series (no change in forcing or noise)
+Stationary system (no change in forcing) but changing noise property
+Drifting linear system that cannot undergo tipping
+Fast system that is slowly approaching fold bifurcation (classical scenario)
+Slow system that at some instance in the time series crosses a fold bifurcation (although no tipping occurs during the full time series)
+Fast system moving away from a fold bifurcation
+
+Step 1: Just looking at the time series alone, how would you match the time series to the scenarios?
+
+Step 2: Using the provided detrended time series, which have been detrended by removing the deterministic (no noise) solution, calculate the lag-1 autocorrelation and variance over a sliding window (suggest to start with using a quarter of the time series). Has this helped to classify the time series? How would you match the time series to the scenarios now?
+
+Extra: Experiment with different window lengths and/or use your own detrending methods. For the stationary system with changing noise property, can you identify what feature of the noise is changing? Can you identify when the slow system crosses the fold bifurcation? A seventh time series has also been provided, can you describe a possible scenario for this time series? If you have your own time series, can you get any early warning?
+
+Contents of data:
+
+t - Array of time points
+
+ts# - Numbered original time series
+
+ts#_detrended - Numbered original time series that have been detrended
+
+Key (python) commands:
+
+import numpy as np
+
+from scipy import stats
+
+from scipy.io import loadmat
+
+loadmat(filename)[variable_name][0] # Load in variable_name data
+
+np.var(x1_detrended_window) # Calculate variance over a window of detrended data
+
+AR1, _ = stats.pearsonr(x1_detrended_window1,x1_detrended_window2) # Calculate pearson correlation (autocorrelation) between 2 windows of detrended data. For lag-1 autocorrelation these windows should overlap and be separated by only 1 time step.
